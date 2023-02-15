@@ -10,4 +10,5 @@
 	{% endif %}
 	<textarea cols="40" rows="5" name="reply_text"></textarea><br/>
 	<input type="submit" value="reply"/>
+	<a href="{% url 'post_db:detail' post.pk %}"><input type="button" value="cancel"></a>
 </form>
