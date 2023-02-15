@@ -9,7 +9,7 @@ class Posts(models.Model):
     pub_date = models.DateTimeField('date published')
     score = models.IntegerField(default=0)
     views = models.IntegerField(default=0)
-
+    no_replies = models.IntegerField(default=0)
     def __str__(self): 
         return self.post_title
 
@@ -24,3 +24,12 @@ class Post_votes(models.Model):
     def __str__(self): 
         return f"(Pid:{self.post_id}, Uid:{self.user_id})"
 
+class Replies(models.Model):
+    parent_id = models.ForeignKey(Posts, on_delete = models.CASCADE)
+    user_id = models.IntegerField(default = 0)
+    score = models.IntegerField(default=0)
+    reply_test = models.CharField(max_length=800)
+    pub_date = models.DateTimeField('date published')
+
+    def __str__(self): 
+        return self.parent_id
