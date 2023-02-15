@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import generic
 from django.http import HttpResponse
-from post_db.models import Posts, Post_votes
+from post_db.models import Posts, Post_votes, Replies
 from django.utils import timezone
 from django.contrib.sessions.backends.db import SessionStore
 from django.contrib.sessions.models import Session
@@ -28,6 +28,15 @@ class DetailView(generic.DetailView):
         post.save()
         return post
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        post_id = self.kwargs['pk']
+        context['Replys'] = Replies.objects.filter(parent_id=post_id).order_by('-pub_date')
+        context['upvoted'] = Post_votes.objects.filter(post_id=post_id, up_or_d=1).exists()
+        context['downvoted'] = Post_votes.objects.filter(post_id=post_id, up_or_d=-1).exists()
+
+        return context
+
 def post_detail(request, post_id):
     posts = Posts.objects.get(pk=post_id)
     upvoted = Post_votes.objects.filter(post_id=post_id, up_or_d=1).exists()
@@ -37,7 +46,7 @@ def post_detail(request, post_id):
         'upvoted': upvoted,
         'downvoted': downvoted,
     }
-    return render(request, 'detail.html', context)
+    return render(request, 'post_db/detail.html', context)
 
 def upvote(request, pk):
     post = get_object_or_404(Posts, pk=pk)
@@ -97,6 +106,22 @@ def create_post(request):
             return render(request, 'post_db/create_post.html', {'post': post, 'message': message})
     else:
         return render(request, 'post_db/create_post.html')
+
+def reply(request, post_id):
+    post = get_object_or_404(Posts, pk=post_id)
+    reply=None
+    if request.method == 'POST':
+        if request.POST.get('reply_text'):
+            reply = Replies(parent_id=post_id, user_id=1, reply_text=request.POST.get('reply_text'), pub_date=timezone.localtime(timezone.now()))
+            post.no_replies += 1
+            reply.save()
+            post.save()
+            return redirect('post_db:detail', post_id)
+        else:
+            message = "Please fill in all the required fields."
+            return render(request, 'post_db/reply.html', {'post': post, 'message': message})
+    else:
+        return render(request, 'post_db/reply.html', {'post': post})
 
 def edit_post(request, post_id):
     post = get_object_or_404(Posts, pk=post_id)

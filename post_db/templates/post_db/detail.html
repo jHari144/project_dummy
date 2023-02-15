@@ -19,21 +19,16 @@
 </div>	
 <div>
 <a href="{% url 'post_db:index' %}"><input type="button" value="Return to Mainpage" style="margin-left: 2px;"></a>
-<input type="button" value="reply" style="margin-right: 2px;">
+<a href="{% url 'post_db:reply' posts.pk %}"><input type="button" value="reply" style="margin-right: 2px;"></a>
 <a href="{% url 'post_db:edit_post' posts.pk %}" style="padding-right: 715px;"><input type="button" value="edit post"></a>
 
 {{ posts.views }} Views
 </div><br/><br/><br/><br/>
 
 <h2>Replies</h2>
-{% for i in '0123456789'|make_list %}
+{% for reply in Replys %}
 <fieldset style="width: 1000px; display: inline-block;">
-	<legend><h3>user{{forloop.counter}}</h3></legend>
-	<div style="width: 1000px; display: flex;"></div>
+	<legend><h3>user_{{ reply.user_id }}</h3></legend>
+	<div style="width: 1000px; display: flex;">{{ reply.reply_text }}</div>
 </fieldset>
-<div style="width: 30px; display: inline-block">
-		<input type="button" value="U"><br/>
-		0
-		<input type="button" value="D">
-</div>
 {% endfor %}

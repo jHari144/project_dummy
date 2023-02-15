@@ -25,10 +25,10 @@ class Post_votes(models.Model):
         return f"(Pid:{self.post_id}, Uid:{self.user_id})"
 
 class Replies(models.Model):
-    parent_id = models.ForeignKey(Posts, on_delete = models.CASCADE)
+    parent_id = models.IntegerField(default = 0)
     user_id = models.IntegerField(default = 0)
     score = models.IntegerField(default=0)
-    reply_test = models.CharField(max_length=800)
+    reply_text = models.CharField(max_length=800)
     pub_date = models.DateTimeField('date published')
 
     def __str__(self): 

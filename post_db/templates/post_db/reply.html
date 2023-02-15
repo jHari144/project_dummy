@@ -1,0 +1,13 @@
+<fieldset style="width: 1000px; display: inline-block;">
+	<legend><h3>{{ post.post_title }}</h3></legend>
+	<div style="width: 1000px; display: flex;">{{ post.post_text }}</div>
+</fieldset>
+
+<form method="post">
+	{% csrf_token %}
+	<h3>Reply</h3>
+	{% if message %} <p><strong style="color: red;">{{ message }}<strong></p> 
+	{% endif %}
+	<textarea cols="40" rows="5" name="reply_text"></textarea><br/>
+	<input type="submit" value="reply"/>
+</form>

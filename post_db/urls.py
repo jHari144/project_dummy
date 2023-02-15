@@ -10,5 +10,6 @@ urlpatterns = [
         path('<int:post_id>/edit_post/', views.edit_post, name='edit_post'),
         path('<int:pk>/upvote', views.upvote, name='upvote'),
         path('<int:pk>/downvote', views.downvote, name='downvote'),
+        path('<int:post_id>/reply', views.reply, name='reply'),
 ]
 

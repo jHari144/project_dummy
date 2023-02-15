@@ -1,10 +1,10 @@
 <form action="" method="post">                                                                                                                                                                                   
         {% csrf_token %}
         <h3>Post Title</h3>                                                                                                                                                                                      
-        {% if error_message %}<p><strong>{{ message }}</strong></p>{% endif %}
+        {% if message %}<p><strong style="color: red;">{{ message }}</strong></p>{% endif %}
         <textarea cols="25" rows="1" name="post_title"></textarea><br/>
         <h3>Write post content below</h3>
-        {% if error_message %}<p><strong>{{ message }}</strong></p>{% endif %}
+        {% if message %}<p><strong style="color: red;">{{ message }}</strong></p>{% endif %}
         <textarea cols="35" rows="8" name="post_text"></textarea><br/>
         <input type="submit" value="post"/>  <a href="{% url 'post_db:index' %}"><input type="button" value="Return to Mainpage"></a>
 </form>
