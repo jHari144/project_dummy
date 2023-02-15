@@ -1,0 +1,12 @@
+<h2>EDIT POST</h2>                                                                                                                                                                                               
+<form method="post">
+        {% csrf_token %}
+        <h3>Post Title</h3>
+        {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+	<textarea cols="25" rows="1" name="post_title">{{post.post_title}}</textarea><br/>
+        <h3>Write post content below</h3>
+        {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+	<textarea cols="35" rows="8" name="post_text">{{post.post_text}}</textarea><br/>
+        <input type="submit" value="post"/>
+</form>
+

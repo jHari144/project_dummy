@@ -1,0 +1,11 @@
+<h1>The Posts!!! Hallalujah</h1>
+{% if latest_posts_list %}
+    <ul>
+    {% for posts in latest_posts_list %}
+    <a href="{% url 'post_db:detail' posts.pk %}" style="font-weight: bold; text-decoration: none; color: black;"><div style="margin-bottom: 1.5px; border: 1px solid black; width: 1000px; height: 50px; display    : flex; align-items: center; justify-content: center;">{{ posts.post_title }}</div></a>                                                                                                                          
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No posts are available.</p>
+{% endif %}
+    <a href="{% url 'post_db:create_post' %}"><input type="button" value="create new post" style="margin-left: 40px;"></a>
