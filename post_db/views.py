@@ -41,7 +41,7 @@ def post_detail(request, post_id):
 
 def upvote(request, pk):
     post = get_object_or_404(Posts, pk=pk)
-    if Post_votes.objects.filter(post_id=pk):
+    if Post_votes.objects.filter(post_id=pk).exists():
         vote_check = Post_votes.objects.filter(post_id=pk).get()
         if vote_check.up_or_d == 1:
             post.views -= 1
@@ -64,7 +64,7 @@ def upvote(request, pk):
 
 def downvote(request, pk):
     post = get_object_or_404(Posts, pk=pk)
-    if Post_votes.objects.filter(post_id=pk).get():
+    if Post_votes.objects.filter(post_id=pk).exists():
         vote_check = Post_votes.objects.filter(post_id=pk).get()
         if vote_check.up_or_d == -1:
             post.views -= 1
